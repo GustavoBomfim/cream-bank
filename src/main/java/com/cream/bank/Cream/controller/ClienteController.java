@@ -7,6 +7,7 @@ import com.cream.bank.Cream.model.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,19 @@ public class ClienteController {
         dao.save(cliente);
     }
 
-    @GetMapping(value = "/buscar")
+    @GetMapping(value = "/buscarPorId")
+    public Cliente buscarPorId(@RequestBody BigInteger numeroConta){
+        return dao.getReferenceById(numeroConta);
+    }
+    @GetMapping(value = "/buscarTodos")
     public List<Cliente> buscar(){
         return dao.findAll();
+    }
+    @PostMapping(value = "/desativar")
+    public void desativar(@RequestParam String numeroConta){
+        System.out.println("aqui");
+        System.out.println(numeroConta);
+        clienteService.desativarCliente(new BigInteger(numeroConta));
     }
 
 

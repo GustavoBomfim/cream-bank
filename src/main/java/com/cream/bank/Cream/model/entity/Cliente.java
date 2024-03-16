@@ -28,5 +28,11 @@ public class Cliente {
     private String endereco;
     @Column(name = "fk_numero_agencia")
     private Integer agencia;
+    @Column(name = "ativo")
+    private Boolean ativo;
+
+
+
+
 
 }

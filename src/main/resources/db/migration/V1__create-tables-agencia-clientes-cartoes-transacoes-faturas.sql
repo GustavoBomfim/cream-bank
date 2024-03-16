@@ -11,6 +11,7 @@ create table clientes
     saldo double not null,
     email             varchar(45) unique not null,
     endereco          varchar(45),
+    ativo TINYINT(1),
     fk_numero_agencia INT,
     foreign key (fk_numero_agencia) references agencia (numero)
 );
