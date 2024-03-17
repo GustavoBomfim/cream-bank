@@ -8,7 +8,9 @@ import com.cream.bank.Cream.model.repository.TransacoesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TransacoesService {
@@ -47,5 +49,10 @@ public class TransacoesService {
         transacoesDao.save(transacoes);
         clienteDao.save(favorecido);
         clienteDao.save(remetente);
+    }
+
+    public List<Transacoes> buscarTransferenciasPorCliente(BigInteger numeroConta){
+        List<Transacoes> transacoesList = transacoesDao.findAllByNumeroContaRemetente(numeroConta);
+        return transacoesList;
     }
 }

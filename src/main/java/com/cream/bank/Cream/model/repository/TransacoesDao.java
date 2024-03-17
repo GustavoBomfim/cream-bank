@@ -4,6 +4,9 @@ import com.cream.bank.Cream.model.entity.Transacoes;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigInteger;
+import java.util.List;
 
 public interface TransacoesDao extends JpaRepository<Transacoes, BigInteger> {
+    List<Transacoes> findAllByNumeroContaRemetente(BigInteger numeroContaRemetente);
+
 }
