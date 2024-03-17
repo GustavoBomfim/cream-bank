@@ -51,8 +51,12 @@ public class TransacoesService {
         clienteDao.save(remetente);
     }
 
-    public List<Transacoes> buscarTransferenciasPorCliente(BigInteger numeroConta){
+    public List<Transacoes> buscarPorRemetente(BigInteger numeroConta){
         List<Transacoes> transacoesList = transacoesDao.findAllByNumeroContaRemetente(numeroConta);
         return transacoesList;
+    }
+
+    public List<Transacoes> buscarTransferenciasPorCliente(BigInteger numeroContaCliente){
+        return transacoesDao.findAllByNumeroContaRemetenteOrContaFavorecido(numeroContaCliente, numeroContaCliente);
     }
 }

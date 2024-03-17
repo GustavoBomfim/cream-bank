@@ -22,7 +22,12 @@ public class TransacoesController {
     }
 
     @GetMapping(value = "/buscarPorRemetente")
-    public List<Transacoes> buscarTransferenciasPorCliente(@RequestParam String numero){
-        return transacoesService.buscarTransferenciasPorCliente(new BigInteger(numero));
+    public List<Transacoes> buscarPorRemetente(@RequestParam String numero){
+        return transacoesService.buscarPorRemetente(new BigInteger(numero));
+    }
+
+    @GetMapping(value = "/buscarTransferenciasPorCliente")
+    public List<Transacoes> buscarTransferenciasPorCliente(@RequestParam String numeroConta){
+        return transacoesService.buscarTransferenciasPorCliente(new BigInteger(numeroConta));
     }
 }

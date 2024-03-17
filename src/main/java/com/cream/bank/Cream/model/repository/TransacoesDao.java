@@ -9,4 +9,6 @@ import java.util.List;
 public interface TransacoesDao extends JpaRepository<Transacoes, BigInteger> {
     List<Transacoes> findAllByNumeroContaRemetente(BigInteger numeroContaRemetente);
 
+    List<Transacoes> findAllByNumeroContaRemetenteOrContaFavorecido(BigInteger contaFavorecido, BigInteger numeroContaRemetente);
+
 }
