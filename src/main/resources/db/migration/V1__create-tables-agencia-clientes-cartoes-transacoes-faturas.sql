@@ -7,8 +7,11 @@ create table clientes
 (
     numero_conta      bigint primary key unique auto_increment,
     cpf_cnpj          varchar(14)        not null unique,
-    telefone          varchar(9) unique  not null,
+    nome              varchar(14)        not null,
+    sobrenome         varchar(14)        not null,
+    telefone          varchar(11) unique not null,
     saldo double not null,
+    senha             varchar(14)        not null,
     email             varchar(45) unique not null,
     endereco          varchar(45),
     ativo             TINYINT(1),

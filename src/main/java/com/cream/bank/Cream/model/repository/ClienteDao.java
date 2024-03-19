@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.math.BigInteger;
 
 public interface ClienteDao extends JpaRepository<Cliente, BigInteger> {
-
+    Cliente findByNumeroContaAndSenha(BigInteger numeroConta, String senha);
 }

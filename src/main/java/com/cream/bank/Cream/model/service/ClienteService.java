@@ -21,4 +21,9 @@ public class ClienteService {
         cliente.setAtivo(false);
         clienteDao.save(cliente);
     }
+
+
+    public Cliente logar(BigInteger numeroConta, String senha){
+        return clienteDao.findByNumeroContaAndSenha(numeroConta, senha);
+    }
 }

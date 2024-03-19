@@ -18,8 +18,14 @@ public class Cliente {
     private BigInteger numeroConta;
     @Column(name = "cpf_cnpj")
     private String cpfCnpj;
+    @Column(name = "nome")
+    private String nome;
+    @Column(name = "sobrenome")
+    private String sobrenome;
     @Column(name = "telefone")
     private String telefone;
+    @Column(name = "senha")
+    private String senha;
     @Column(name = "saldo")
     private BigDecimal saldo;
     @Column(name = "email")
