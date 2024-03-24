@@ -24,6 +24,15 @@ public class ClienteService {
 
 
     public Cliente logar(BigInteger numeroConta, String senha){
-        return clienteDao.findByNumeroContaAndSenha(numeroConta, senha);
+        Cliente cliente = clienteDao.findByNumeroContaAndSenha(numeroConta, senha);
+        if (cliente != null) {
+            return cliente;
+        }
+        throw new NullPointerException("Cliente nao cadastrado.");
+
+    }
+
+    public Cliente buscarCliente(BigInteger numeroConta){
+        return clienteDao.findByNumeroConta(numeroConta);
     }
 }

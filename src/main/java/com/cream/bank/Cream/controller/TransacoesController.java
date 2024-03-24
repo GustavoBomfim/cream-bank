@@ -1,11 +1,14 @@
 package com.cream.bank.Cream.controller;
 
 import com.cream.bank.Cream.model.dto.TransacaoDTO;
+import com.cream.bank.Cream.model.entity.Cliente;
 import com.cream.bank.Cream.model.entity.Transacoes;
 import com.cream.bank.Cream.model.service.TransacoesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -17,8 +20,9 @@ public class TransacoesController {
     TransacoesService transacoesService;
 
     @PostMapping(value = "/enviarDinheiro")
-    public void enviarDinheiro(@RequestBody TransacaoDTO transacaoDTO) throws Exception {
-        transacoesService.enviarDinheiro(transacaoDTO);
+    public BigDecimal enviarDinheiro(@RequestBody TransacaoDTO transacaoDTO) throws Exception {
+        Cliente favorecido = transacoesService.enviarDinheiro(transacaoDTO);
+        return favorecido.getSaldo();
     }
 
     @GetMapping(value = "/buscarPorRemetente")

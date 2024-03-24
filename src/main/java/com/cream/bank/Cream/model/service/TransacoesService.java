@@ -23,9 +23,9 @@ public class TransacoesService {
     @Autowired
     TransacoesDao transacoesDao;
 
-    public void enviarDinheiro(TransacaoDTO dto) throws Exception {
-        Cliente favorecido = clienteDao.getReferenceById(dto.getContaFavorecido());
-        Cliente remetente = clienteDao.getReferenceById(dto.getContaRemetente());
+    public Cliente enviarDinheiro(TransacaoDTO dto) throws Exception {
+        Cliente favorecido = clienteService.buscarCliente(dto.getContaFavorecido());
+        Cliente remetente = clienteService.buscarCliente(dto.getContaRemetente());
 
         if(dto.getContaRemetente().equals(dto.getContaFavorecido())){
             throw new Exception("Não é possível fazer transferência para a sua própria conta.");
@@ -40,7 +40,7 @@ public class TransacoesService {
 
         if (remetente.getSaldo().compareTo(dto.getValor()) >= 0) {
             remetente.setSaldo(remetente.getSaldo().subtract(dto.getValor()));
-            favorecido.setSaldo(remetente.getSaldo().add(dto.getValor()));
+            favorecido.setSaldo(favorecido.getSaldo().add(dto.getValor()));
         } else {
             throw new Exception("Remetente não possui saldo o suficiente");
         }
@@ -49,6 +49,7 @@ public class TransacoesService {
         transacoesDao.save(transacoes);
         clienteDao.save(favorecido);
         clienteDao.save(remetente);
+        return remetente;
     }
 
     public List<Transacoes> buscarPorRemetente(BigInteger numeroConta){

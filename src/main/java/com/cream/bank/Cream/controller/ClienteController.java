@@ -45,19 +45,7 @@ public class ClienteController {
         clienteService.desativarCliente(new BigInteger(numeroConta));
     }
 
-    @Configuration
-    @EnableWebMvc
-    public class WebConfig implements WebMvcConfigurer {
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOrigins("*")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowedHeaders("*");
-        }
-    }
-
-    @GetMapping(value = "/logar")
+    @PostMapping(value = "/logar")
     public ResponseEntity logar(@RequestBody ClienteLoginDTO dto){
         Cliente logar = clienteService.logar(new BigInteger(dto.getNumeroConta()), dto.getSenha());
         return ResponseEntity.ok(logar);
