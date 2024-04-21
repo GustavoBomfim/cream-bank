@@ -2,7 +2,9 @@ package com.cream.bank.Cream.controller;
 
 
 import com.cream.bank.Cream.model.dto.ClienteLoginDTO;
+import com.cream.bank.Cream.model.entity.Cartao;
 import com.cream.bank.Cream.model.entity.Cliente;
+import com.cream.bank.Cream.model.repository.CartaoDao;
 import com.cream.bank.Cream.model.repository.ClienteDao;
 import com.cream.bank.Cream.model.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,28 +23,36 @@ public class ClienteController {
 
     @Autowired
     private ClienteDao dao;
+    @Autowired
+    private CartaoDao cartaoDao;
 
 
     @PostMapping(value = "/cadastrar")
-    public void cadastrar(@RequestBody Cliente cliente){
-        dao.save(cliente);
+    public void cadastrar(@RequestBody Cliente cliente) {
+        cliente = dao.save(cliente);
+        Cartao cartao = new Cartao();
+        String nome = cliente.getNome() + " " + cliente.getSobrenome();
+        cartao.gerarDadosCartao(cliente.getNumeroConta(), nome);
+        cartaoDao.save(cartao);
     }
 
     @GetMapping(value = "/buscarPorId")
-    public Cliente buscarPorId(@RequestBody BigInteger numeroConta){
+    public Cliente buscarPorId(@RequestBody BigInteger numeroConta) {
         return dao.getReferenceById(numeroConta);
     }
+
     @GetMapping(value = "/buscarTodos")
-    public List<Cliente> buscar(){
+    public List<Cliente> buscar() {
         return dao.findAll();
     }
+
     @PostMapping(value = "/desativar")
-    public String desativar(@RequestBody ClienteLoginDTO dto){
+    public String desativar(@RequestBody ClienteLoginDTO dto) {
         return clienteService.desativarCliente(new BigInteger(dto.getNumeroConta()), dto.getSenha());
     }
 
     @PostMapping(value = "/logar")
-    public ResponseEntity logar(@RequestBody ClienteLoginDTO dto){
+    public ResponseEntity logar(@RequestBody ClienteLoginDTO dto) {
         Cliente logar = clienteService.logar(new BigInteger(dto.getNumeroConta()), dto.getSenha());
         return ResponseEntity.ok(logar);
     }
