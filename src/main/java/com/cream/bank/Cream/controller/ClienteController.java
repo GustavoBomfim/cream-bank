@@ -6,12 +6,8 @@ import com.cream.bank.Cream.model.entity.Cliente;
 import com.cream.bank.Cream.model.repository.ClienteDao;
 import com.cream.bank.Cream.model.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 import java.math.BigInteger;
@@ -21,10 +17,10 @@ import java.util.List;
 @RequestMapping(value = "/cliente")
 public class ClienteController {
     @Autowired
-    ClienteService clienteService;
+    private ClienteService clienteService;
 
     @Autowired
-    ClienteDao dao;
+    private ClienteDao dao;
 
 
     @PostMapping(value = "/cadastrar")
@@ -41,8 +37,8 @@ public class ClienteController {
         return dao.findAll();
     }
     @PostMapping(value = "/desativar")
-    public void desativar(@RequestParam String numeroConta){
-        clienteService.desativarCliente(new BigInteger(numeroConta));
+    public String desativar(@RequestBody ClienteLoginDTO dto){
+        return clienteService.desativarCliente(new BigInteger(dto.getNumeroConta()), dto.getSenha());
     }
 
     @PostMapping(value = "/logar")

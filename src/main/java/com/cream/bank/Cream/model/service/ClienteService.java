@@ -16,10 +16,21 @@ public class ClienteService {
     }
 
 
-    public void desativarCliente(BigInteger numeroConta){
+    public String desativarCliente(BigInteger numeroConta, String senha){
         Cliente cliente = clienteDao.getReferenceById(numeroConta);
-        cliente.setAtivo(false);
-        clienteDao.save(cliente);
+
+        if (cliente.getSenha().equals(senha) && cliente.getAtivo()) {
+            cliente.setAtivo(false);
+            clienteDao.save(cliente);
+            return "Usuario desativado com sucesso!";
+        }
+        else if(!cliente.getSenha().equals(senha)) {
+            return "Senha incorreta";
+        }
+        else {
+            return "Conta ja esta desativada";
+        }
+
     }
 
 
