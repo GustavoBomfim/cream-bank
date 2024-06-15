@@ -10,7 +10,11 @@ import java.math.BigInteger;
 public class ClienteService {
 
     @Autowired
-    ClienteDao clienteDao;
+    private ClienteDao clienteDao;
+
+    @Autowired
+    private EmailService emailService;
+
     public void cadastrar(Cliente cliente){
         clienteDao.save(cliente);
     }
@@ -39,6 +43,13 @@ public class ClienteService {
         if (cliente != null) {
             return cliente;
         }
+        cliente = clienteDao.findByNumeroConta(numeroConta);
+        if (cliente != null) {
+            emailService.enviarEmail("Tentativa de entrar na conta",
+                    "Alguém tentou acessar a sua conta com uma senha errada", "gustavobomfim432@gmail.com");
+            throw new SecurityException("Senha incorreta");
+        }
+
         throw new NullPointerException("Cliente nao cadastrado.");
 
     }
