@@ -23,6 +23,9 @@ public class TransacoesService {
     @Autowired
     TransacoesDao transacoesDao;
 
+    @Autowired
+    EmailService emailService;
+
     public Cliente enviarDinheiro(TransacaoDTO dto) throws Exception {
         Cliente favorecido = clienteService.buscarCliente(dto.getContaFavorecido());
         Cliente remetente = clienteService.buscarCliente(dto.getContaRemetente());
@@ -49,6 +52,12 @@ public class TransacoesService {
         transacoesDao.save(transacoes);
         clienteDao.save(favorecido);
         clienteDao.save(remetente);
+        emailService.enviarEmail("Transferência efetuada com sucesso.", "Sua transferência de R$" + dto.getValor()
+                        + " foi efetuada com sucesso",
+                "gustavobomfim432@gmail.com");
+
+        emailService.enviarEmail("Transferência recebida.", "Você recebeu uma transferência de R$" + dto.getValor(),
+                "gustavobomfim432@gmail.com");
         return remetente;
     }
 
