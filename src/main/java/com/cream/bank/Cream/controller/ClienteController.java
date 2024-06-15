@@ -57,5 +57,10 @@ public class ClienteController {
         return ResponseEntity.ok(logar);
     }
 
+    @PostMapping(value = "/esqueceuSenha")
+    public String esqueceuSenha(@RequestParam String numeroConta){
+        return clienteService.gerarSenhaAleatoria(new BigInteger(numeroConta));
+    }
+
 
 }
